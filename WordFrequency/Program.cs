@@ -25,7 +25,7 @@ namespace WordFrequency
 			while ((line = file.ReadLine ()) != null) {
 				// Read the file line by line, 
 				// Extract words on each line and remove punctuation marks
-				words = BreakLineIntoWords(line);
+				words = BreakLineIntoWords(line.ToLower());
 				for (int i = 0; i < words.Length; i++) {
 					if (WordDictionary.ContainsKey (words [i])) {
 						/*
@@ -54,7 +54,7 @@ namespace WordFrequency
 			// Sort the dictionary using lambda expression
 			var sortedWordDictionary = from entry in WordDictionary orderby entry.Value descending select entry;
 
-			foreach (KeyValuePair<string, int> pair in sortedWordDictionary.Take(10))
+			foreach (KeyValuePair<string, int> pair in sortedWordDictionary)
 			{
 				Console.WriteLine("{0}: {1}",
 					pair.Key,
@@ -67,20 +67,9 @@ namespace WordFrequency
 		public static string[] BreakLineIntoWords(string line) {
 			// extract email(s) and url(s) from line, store them as separate words, separate string
 			// concatinate that string with the words string later
+			string extractedEmails = ExtractEmails(line);
 
-			Regex emailRegex = new Regex(@"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*",
-				RegexOptions.IgnoreCase);
-			//find items that matches with our pattern
-			MatchCollection emailMatches = emailRegex.Matches(line);
-
-			StringBuilder stringbuilder = new StringBuilder();
-
-			foreach (Match emailMatch in emailMatches)
-			{
-				stringbuilder.Append(emailMatch.Value + " ");
-			}
-
-			// replace extracted emails with empty string
+			// Remove the extracted emails from 'line'
 			line = Regex.Replace(line, @"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", "");
 
 			var WordsWithoutPunctuation = new StringBuilder();
@@ -95,12 +84,29 @@ namespace WordFrequency
 				if (!char.IsPunctuation(c))
 					WordsWithoutPunctuation.Append(c);
 			}
-
-			line = WordsWithoutPunctuation.ToString() + " " + stringbuilder.ToString();
+			line = WordsWithoutPunctuation.ToString() + " " + extractedEmails;
 
 			// Split the words using space char and return the array
 			string[] newLine = line.Split(' ');
 			return newLine;
+		}
+
+		public static string ExtractEmails(string inputLine){
+
+			Regex emailRegex = new Regex(@"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*",
+				RegexOptions.IgnoreCase);
+			//find items that matches with our pattern
+			MatchCollection emailMatches = emailRegex.Matches(inputLine);
+
+			StringBuilder stringbuilder = new StringBuilder();
+
+			foreach (Match emailMatch in emailMatches)
+			{
+				stringbuilder.Append(emailMatch.Value + " ");
+			}
+
+
+			return stringbuilder.ToString ();
 		}
 	}
 }
