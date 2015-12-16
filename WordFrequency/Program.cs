@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace WordFrequency
 {
@@ -17,6 +18,7 @@ namespace WordFrequency
 			Dictionary<string, int> WordDictionary = new Dictionary<string, int>();
 			string[] words;
 			string filepath = Console.ReadLine ();
+
 
 			StreamReader file = new StreamReader (filepath.ToString());
 
@@ -66,6 +68,21 @@ namespace WordFrequency
 			// extract email(s) and url(s) from line, store them as separate words, separate string
 			// concatinate that string with the words string later
 
+			Regex emailRegex = new Regex(@"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*",
+				RegexOptions.IgnoreCase);
+			//find items that matches with our pattern
+			MatchCollection emailMatches = emailRegex.Matches(line);
+
+			StringBuilder stringbuilder = new StringBuilder();
+
+			foreach (Match emailMatch in emailMatches)
+			{
+				stringbuilder.Append(emailMatch.Value + " ");
+			}
+
+			// replace extracted emails with empty string
+			line = Regex.Replace(line, @"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", "");
+
 			var WordsWithoutPunctuation = new StringBuilder();
 
 			/*
@@ -79,7 +96,7 @@ namespace WordFrequency
 					WordsWithoutPunctuation.Append(c);
 			}
 
-			line = WordsWithoutPunctuation.ToString();
+			line = WordsWithoutPunctuation.ToString() + " " + stringbuilder.ToString();
 
 			// Split the words using space char and return the array
 			string[] newLine = line.Split(' ');
