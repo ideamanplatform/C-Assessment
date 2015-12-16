@@ -54,9 +54,9 @@ namespace WordFrequency
 			// Sort the dictionary using lambda expression
 			var sortedWordDictionary = from entry in WordDictionary orderby entry.Value descending select entry;
 
-			foreach (KeyValuePair<string, int> pair in sortedWordDictionary)
+			foreach (KeyValuePair<string, int> pair in sortedWordDictionary.Take(10))
 			{
-				Console.WriteLine("{0}: {1}",
+				Console.WriteLine("\n\"{0}\": {1}",
 					pair.Key,
 					pair.Value);
 			}
@@ -68,9 +68,10 @@ namespace WordFrequency
 			// extract email(s) and url(s) from line, store them as separate words, separate string
 			// concatinate that string with the words string later
 			string extractedEmails = ExtractEmails(line);
-
+			string extractedUrls = ExtractURIs (line);
 			// Remove the extracted emails from 'line'
 			line = Regex.Replace(line, @"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", "");
+			line = Regex.Replace(line, @"\b(?:https?://|www\.)[^ \f\n\r\t\v\]]+\b","");
 
 			var WordsWithoutPunctuation = new StringBuilder();
 
@@ -84,7 +85,7 @@ namespace WordFrequency
 				if (!char.IsPunctuation(c))
 					WordsWithoutPunctuation.Append(c);
 			}
-			line = WordsWithoutPunctuation.ToString() + " " + extractedEmails;
+			line = WordsWithoutPunctuation.ToString() + " " + extractedEmails + " " + extractedUrls;
 
 			// Split the words using space char and return the array
 			string[] newLine = line.Split(' ');
@@ -106,6 +107,20 @@ namespace WordFrequency
 			}
 
 
+			return stringbuilder.ToString ();
+		}
+
+		public static string ExtractURIs(string inputLine){
+			// just like the email regex
+			Regex uriRegex = new Regex (@"\b(?:https?://|www\.)[^ \f\n\r\t\v\]]+\b", RegexOptions.IgnoreCase);
+			//find items that matches with our pattern
+			MatchCollection uriMatches = uriRegex.Matches(inputLine);
+
+			StringBuilder stringbuilder = new StringBuilder();
+			foreach (Match uriMatch in uriMatches)
+			{
+				stringbuilder.Append(uriMatch.Value + " ");
+			}
 			return stringbuilder.ToString ();
 		}
 	}

@@ -34,7 +34,20 @@ re-use it under the terms of the Project Gutenberg License included
 with this eBook or online at www.gutenberg.org
 lehlohonolo@antfarm.co.za, hloni2major@gmail.com
 lehlohonolo@antfarm.co.za, hloni2major@gmail.com
-lehlohonolo@antfarm.co.za, hloni2major@gmail.com");
+lehlohonolo@antfarm.co.za, hloni2major@gmail.com
+
+www.facebook.com, www.facebook.com, www.facebook.com, www.facebook.com, www.facebook.com
+https://www.google.com/, https://www.google.com/, https://www.google.com/, https://www.google.com/, https://www.google.com/
+
+www.gutenberg.org
+www.gutenberg.org
+www.gutenberg.org
+www.gutenberg.org
+www.gutenberg.org
+www.gutenberg.org
+www.gutenberg.org
+www.gutenberg.org
+");
 
 }
 }
