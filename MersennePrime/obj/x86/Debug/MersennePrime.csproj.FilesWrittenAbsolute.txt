@@ -1,0 +1,5 @@
+/Users/lehlohonolo/Projects/FedGroup/MersennePrime/obj/x86/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/Users/lehlohonolo/Projects/FedGroup/MersennePrime/bin/Debug/MersennePrime.exe.mdb
+/Users/lehlohonolo/Projects/FedGroup/MersennePrime/bin/Debug/MersennePrime.exe
+/Users/lehlohonolo/Projects/FedGroup/MersennePrime/obj/x86/Debug/MersennePrime.exe
+/Users/lehlohonolo/Projects/FedGroup/MersennePrime/obj/x86/Debug/MersennePrime.exe.mdb
