@@ -1,4 +1,4 @@
-﻿<Properties StartupItem="WordFrequency/WordFrequency.csproj">
+﻿<Properties StartupItem="MersennePrime/MersennePrime.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
   <MonoDevelop.Ide.Workbench ActiveDocument="WordFrequency/data.txt">
     <Files>
