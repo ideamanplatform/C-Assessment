@@ -9,9 +9,11 @@ namespace MersennePrime
 			Console.Write ("Enter a number : ");
 			string StrNumber = Console.ReadLine ();
 			long number = long.Parse (StrNumber);
-			for (long q = 0; q <= number; q++) {
+			for (long q = 1; q <= number; q++) {
 				if(isPrime(q)){
-					Console.WriteLine ("{0} is E of Prime Numbers", q);
+					
+					if(isMersennePrime(q))
+						Console.WriteLine ("{0} is a Mersenne Prime Number", q);
 				}
 			}
 
@@ -19,20 +21,24 @@ namespace MersennePrime
 		}
 
 		public static bool isPrime(long num) {
-			int count = 0;
-			bool isPrime = true;
-			for(long i = 0; i<= num; i++){
-				for(long j = 2; j <= i; j++){
-					if(i%j == 0)
-						count++;
-				}
+			if (num < 2) return false;
+			if (num % 2 == 0) return (num == 2);
+			long root = (long)Math.Sqrt((double)num);
+			for (int i = 3; i <= root; i += 2)
+			{
+				if (num % i == 0) return false;
 			}
+			return true;
+		}
 
-			if (count > 2) {
-				isPrime = false;	
-			}
+		public static bool isMersennePrime(long num)
+		{
+			bool isMersennePrime = false;
+			long mersenneNum = ((long)Math.Pow (2, num)) - 1;
+			if (isPrime (mersenneNum))
+				isMersennePrime = true;
 
-			return isPrime;
+			return isMersennePrime;
 		}
 	}
 }
